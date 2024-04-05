@@ -6,13 +6,13 @@ var saida = document.getElementById("saida-de-dados");
 
 var email = document.getElementById("email");
 
-var Telefone = document.getElementById("Telefone");
+var telefone = document.getElementById("telefone");
 
-var CEP = document.getElementById("CEP");
+var cep = document.getElementById("cep");
 
 var logradouro = document.getElementById("logradouro");
 
-var número = document.getElementById("número");
+var numero = document.getElementById("numero");
 
 var complemento = document.getElementById("complemento");
 
@@ -24,7 +24,17 @@ var estado = document.getElementById("estado");
 
 function alertar(){
 
+        // formatação dos dados
+        cep.value = cep.value.replace('-','');
+
+        // validação de dados
+        if(cep.value.length < 8){
+            alert("Entre com um CEP válido!");
+            return;
+        }
+
         //buscar o endereço pelo cep
+    
         const url =`https://viacep.com.br/ws/${cep.value}/json`;
 
         fetch(url)
@@ -33,22 +43,30 @@ function alertar(){
             logradouro.value = data.logradouro;
             bairro.value = data.bairro;
             cidade.value = data.cidade;
-            bairro.value = data.bairro;
-            bairro.value = data.bairro;
+            estado.value = data.estado;;
+            complemento.value = data.complemento;
 
-            saida.innerText = "Nome: " + " " + nome.value +
-            "\n E-mail: " + " " + email.value + nome.value +
-            "\n Telefone: " + " " + Telefone + nome.value +
-            "\n CEP: " + " " + CEP + nome.value + 
-            "\n logradouro: " + " " +  logradouro + nome.value +
-            "\n número: " + " " + número + nome.value +
-            "\n complemento: " + " " + complemento + nome.value +
-            "\n bairro: " + " " + bairro + nome.value +
-            "\n cidade: " + " " +  cidade + nome.value +
-            "\n estado: " + " " + estado + nome.value;
+            saidaDeDados(); //chamada da função
+
         })
-        .catch(error=>alert(error))
+        .catch(error=>alert(error=>alert(error.message())))
 
     //alert(nome.value + " " + "clicou no botão!!!");
+
+}
+
+
+function saidaDeDados(){
+
+    saida.innerText = "Nome: " + " " + nome.value +
+            "\n E-mail: " + " " + email.value +
+            "\n Telefone: " + " " + telefone +
+            "\n CEP: " + " " + cep.value + 
+            "\n logradouro: " + " " +  logradouro.value +
+            "\n número: " + " " + numero.value +
+            "\n complemento: " + " " + complemento.value +
+            "\n bairro: " + " " + bairro.value +
+            "\n cidade: " + " " +  cidade.value +
+            "\n estado: " + " " + estado.value; 
 
 }
